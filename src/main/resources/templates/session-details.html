@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>FitPulse — Session details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+        :root{
+            --bg:#0A0C10; --surface:#12151A; --surface-raised:#171B22;
+            --border:rgba(255,255,255,.07); --border-strong:rgba(255,255,255,.14);
+            --text:#EEF1F5; --text-dim:#8891A0; --text-faint:#565F6C;
+            --violet:#8B7CFF; --cyan:#3FE0E6; --coral:#FF6178; --lime:#C8FF6B;
+        }
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{ background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; }
+
+        .app{ display:grid; grid-template-columns:220px 1fr; min-height:100vh; }
+        @media (max-width:880px){ .app{ grid-template-columns:1fr; } .nav{ display:none; } }
+
+        .nav{ border-right:1px solid var(--border); padding:28px 18px; display:flex; flex-direction:column; gap:26px; }
+        .brand{ font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:21px; padding-left:6px; }
+        .brand span{ color:var(--violet); }
+        .nav-item{ display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:8px; font-size:13.5px; color:var(--text-dim); cursor:pointer; }
+        .nav-item .dot{ width:6px; height:6px; border-radius:50%; background:var(--text-faint); }
+        .nav-item.active{ background:rgba(139,124,255,.12); color:var(--text); }
+        .nav-item.active .dot{ background:var(--violet); box-shadow:0 0 8px var(--violet); }
+
+        main{ padding:34px 44px; max-width:840px; }
+        .back{ font-size:12.5px; color:var(--text-dim); text-decoration:none; margin-bottom:20px; display:inline-block; cursor:pointer; }
+        .back:hover{ color:var(--text); }
+
+        .header{
+            display:flex; justify-content:space-between; align-items:flex-start; gap:24px;
+            padding-bottom:24px; border-bottom:1px solid var(--border); margin-bottom:28px; flex-wrap:wrap;
+        }
+        .type-tag{
+            font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em;
+            color:var(--coral); margin-bottom:10px;
+        }
+        h1{ font-family:'Big Shoulders Display',sans-serif; font-weight:700; font-size:34px; }
+        .meta{ display:flex; gap:18px; margin-top:12px; flex-wrap:wrap; }
+        .meta-item{ font-size:13px; color:var(--text-dim); }
+        .meta-item b{ color:var(--text); font-family:'IBM Plex Mono',monospace; font-weight:500; }
+
+        .capacity-ring{
+            width:88px; height:88px; border-radius:50%;
+            background:conic-gradient(var(--coral) 0% 33%, var(--surface-raised) 33% 100%);
+            display:flex; align-items:center; justify-content:center; flex-shrink:0;
+        }
+        .capacity-ring .inner{
+            width:70px; height:70px; border-radius:50%; background:var(--surface);
+            display:flex; flex-direction:column; align-items:center; justify-content:center;
+        }
+        .capacity-ring .n{ font-family:'IBM Plex Mono',monospace; font-size:18px; font-weight:500; }
+        .capacity-ring .l{ font-size:9px; color:var(--text-faint); }
+
+        .coach-card{
+            display:flex; align-items:center; gap:14px; background:var(--surface);
+            border:1px solid var(--border); border-radius:12px; padding:16px 18px; margin-bottom:28px;
+        }
+        .coach-avatar{ width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg, var(--coral), var(--violet)); flex-shrink:0; }
+        .coach-card .name{ font-size:14.5px; font-weight:500; }
+        .coach-card .spec{ font-size:12px; color:var(--text-dim); margin-top:2px; }
+        .coach-card .loc{ margin-left:auto; font-size:12px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; }
+
+        h2{ font-family:'Big Shoulders Display',sans-serif; font-weight:600; font-size:18px; margin-bottom:14px; letter-spacing:.2px; }
+
+        .exercises{ display:flex; flex-direction:column; border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:32px; }
+        .ex-row{
+            display:grid; grid-template-columns:28px 1fr auto; align-items:center; gap:14px;
+            padding:14px 18px; background:var(--surface); border-bottom:1px solid var(--border);
+        }
+        .ex-row:last-child{ border-bottom:none; }
+        .ex-idx{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--text-faint); }
+        .ex-name{ font-size:14px; }
+        .ex-spec{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--coral); white-space:nowrap; }
+
+        .book-bar{
+            position:sticky; bottom:24px; display:flex; align-items:center; justify-content:space-between;
+            background:var(--surface-raised); border:1px solid var(--border-strong); border-radius:14px;
+            padding:18px 22px; box-shadow:0 20px 50px -20px rgba(0,0,0,.6);
+        }
+        .book-bar .price{ font-size:12.5px; color:var(--text-dim); }
+        .book-bar .price b{ color:var(--lime); font-family:'IBM Plex Mono',monospace; font-size:15px; display:block; margin-top:2px; }
+        .book-btn{
+            background:linear-gradient(135deg, var(--coral), #E0455C);
+            color:#0A0C10; font-weight:600; font-size:14.5px; border:none; padding:13px 26px;
+            border-radius:9px; cursor:pointer; box-shadow:0 0 0 1px rgba(255,97,120,.4), 0 10px 30px -10px rgba(255,97,120,.5);
+        }
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <nav class="nav">
+        <div class="brand">Fit<span>Pulse</span></div>
+        <div class="nav-item active"><span class="dot"></span> Browse sessions</div>
+        <div class="nav-item"><span class="dot"></span> My bookings</div>
+        <div class="nav-item"><span class="dot"></span> Subscriptions</div>
+        <div class="nav-item"><span class="dot"></span> Wallet</div>
+    </nav>
+
+    <main>
+        <a class="back" onclick="location.href='dashboard.html'">← Back to sessions</a>
+
+        <div class="header">
+            <div>
+                <div class="type-tag">hyrox</div>
+                <h1>Full HYROX Simulation</h1>
+                <div class="meta">
+                    <div class="meta-item">Today, <b>18:00 – 19:15</b></div>
+                    <div class="meta-item">Downtown Studio</div>
+                </div>
+            </div>
+            <div class="capacity-ring">
+                <div class="inner">
+                    <div class="n">4/12</div>
+                    <div class="l">booked</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="coach-card">
+            <div class="coach-avatar"></div>
+            <div>
+                <div class="name">Ivan Georgiev</div>
+                <div class="spec">HYROX & CrossFit specialist, 8 years coaching</div>
+            </div>
+            <div class="loc">Downtown Studio</div>
+        </div>
+
+        <h2>Exercises</h2>
+        <div class="exercises">
+            <div class="ex-row"><span class="ex-idx">01</span><span class="ex-name">1km SkiErg</span><span class="ex-spec">1000 m</span></div>
+            <div class="ex-row"><span class="ex-idx">02</span><span class="ex-name">Sled Push</span><span class="ex-spec">50 m · 4 sets</span></div>
+            <div class="ex-row"><span class="ex-idx">03</span><span class="ex-name">Sled Pull</span><span class="ex-spec">50 m · 4 sets</span></div>
+            <div class="ex-row"><span class="ex-idx">04</span><span class="ex-name">Burpee Broad Jumps</span><span class="ex-spec">80 m</span></div>
+            <div class="ex-row"><span class="ex-idx">05</span><span class="ex-name">Rowing</span><span class="ex-spec">1000 m</span></div>
+            <div class="ex-row"><span class="ex-idx">06</span><span class="ex-name">Farmers Carry</span><span class="ex-spec">200 m</span></div>
+            <div class="ex-row"><span class="ex-idx">07</span><span class="ex-name">Sandbag Lunges</span><span class="ex-spec">100 m</span></div>
+            <div class="ex-row"><span class="ex-idx">08</span><span class="ex-name">Wall Balls</span><span class="ex-spec">75 reps · 3 sets</span></div>
+        </div>
+
+        <div class="book-bar">
+            <div class="price">Covered by your plan<b>HYROX Monthly — active</b></div>
+            <button class="book-btn">Book this session</button>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>
