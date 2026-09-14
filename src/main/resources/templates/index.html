@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>FitPulse — Train with purpose</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/index.css}">
+</head>
+<body>
+
+<header>
+    <div class="wrap nav-row">
+        <div class="brand">Fit<span>Pulse</span></div>
+        <nav class="nav-links">
+            <a href="#types">Workout types</a>
+            <a href="#how">How it works</a>
+            <a href="#">Coaches</a>
+        </nav>
+        <div class="nav-actions">
+            <a class="btn btn-ghost" href="/auth">Log in</a>
+            <a class="btn btn-solid" href="/auth#register">Sign up</a>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="wrap hero-grid">
+        <div>
+            <h1>Train hard.<br /><span class="grad">Track everything.</span></h1>
+            <p>Weightlifting, HYROX, and CrossFit sessions — run by real coaches, booked in seconds. See exactly who's coaching and what's in the workout, then reserve your spot straight from your wallet balance. No messages, no waiting on a reply.</p>
+        </div>
+
+        <div class="hero-stat">
+            <div class="live-dot">LIVE TODAY</div>
+            <div class="board-row">
+                <div class="board-bar coral"></div>
+                <div>
+                    <div class="board-name">Full HYROX Simulation</div>
+                    <div class="board-sub">Ivan Georgiev · Downtown Studio</div>
+                </div>
+                <div class="board-time">18:00</div>
+            </div>
+            <div class="board-row">
+                <div class="board-bar violet"></div>
+                <div>
+                    <div class="board-name">Olympic Lifting Fundamentals</div>
+                    <div class="board-sub">Maria Dimitrova · Strength Room</div>
+                </div>
+                <div class="board-time">19:30</div>
+            </div>
+            <div class="board-row">
+                <div class="board-bar cyan"></div>
+                <div>
+                    <div class="board-name">WOD: Grace + Accessory</div>
+                    <div class="board-sub">Ivan Georgiev · Main Floor</div>
+                </div>
+                <div class="board-time">Tomorrow, 07:00</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="types">
+    <div class="wrap">
+        <div class="section-head">
+            <h2>Every discipline, one plan away</h2>
+            <p>Subscribe to the workout type you train for, then book any session that matches it.</p>
+        </div>
+        <div class="type-grid">
+            <div class="type-card violet">
+                <div class="name">Weightlifting</div>
+                <div class="desc">Olympic lifts and strength fundamentals with dedicated coaching.</div>
+            </div>
+            <div class="type-card coral">
+                <div class="name">HYROX</div>
+                <div class="desc">Full race simulations covering every station, at real pace.</div>
+            </div>
+            <div class="type-card cyan">
+                <div class="name">CrossFit</div>
+                <div class="desc">Daily WODs mixing conditioning, gymnastics, and lifting.</div>
+            </div>
+            <div class="type-card lime">
+                <div class="name">Cardio</div>
+                <div class="desc">Interval and endurance sessions built around your pace.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="how">
+    <div class="wrap">
+        <div class="section-head">
+            <h2>How it works</h2>
+            <p>Three steps between signing up and showing up.</p>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="idx">01</div>
+                <div class="title">Top up your wallet</div>
+                <div class="body">Add credit once, then spend it on any plan — no card details re-entered per purchase.</div>
+            </div>
+            <div class="step">
+                <div class="idx">02</div>
+                <div class="title">Subscribe to a plan</div>
+                <div class="body">Pick a workout type and duration. Your balance covers it instantly.</div>
+            </div>
+            <div class="step">
+                <div class="idx">03</div>
+                <div class="title">Book a session</div>
+                <div class="body">Browse the schedule, reserve a spot, and see your coach and exercises upfront.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="wrap">
+        <div class="cta">
+            <div>
+                <h3>Your next session is a couple of clicks away.</h3>
+                <p>Create an account and see what's on the board today.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="wrap foot-row">
+        <div>© 2026 FitPulse</div>
+        <div>Weightlifting · HYROX · CrossFit · Cardio</div>
+    </div>
+</footer>
+
+</body>
+</html>
