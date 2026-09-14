@@ -34,7 +34,6 @@ public class UserService {
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .createdOn(LocalDateTime.now())
                 .updatedOn(LocalDateTime.now())
-                .role(registerRequest.getRole())
                 .walletBalance(new BigDecimal("20"))
                  .build();
 
@@ -44,7 +43,7 @@ public class UserService {
                 "New user profile was registered in the system for user [{}]",
                 user.getFirstName() + " " + user.getLastName()
         );
-
+    return user;
 
     }
 }
