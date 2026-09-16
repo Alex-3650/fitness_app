@@ -38,15 +38,15 @@
 
             <p class="sub">Sign in to book sessions and manage your wallet.</p>
             <form th:action="@{/login}" th:method="POST" th:object="${loginRequest}">
-                <div class="field">
-                    <label for="l-email">Email</label>
-                    <input id="l-email" type="email" placeholder="you@example.com" th:field="*{email}" />
-                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error message</p>
+                <div class="field" th:classappend="${#fields.hasErrors('email')} ? 'error'">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" placeholder="you@example.com" th:field="*{email}" />
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-text">Error message</span>
                 </div>
-                <div class="field">
+                <div class="field" th:classappend="${#fields.hasErrors('password')} ? 'error'">
                     <label for="l-pass">Password</label>
                     <input id="l-pass" type="password" placeholder="••••••••" th:field="*{password}" />
-                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error message</p>
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-text">Error message</span>
                 </div>
                 <p class="chip coral"  th:if="${errorMessage}" th:text="${errorMessage}">Incorrect email or password!</p>
                 <button type="submit" class="submit">Sign in</button>
@@ -59,21 +59,21 @@
             <p class="sub">Join FitPulse and start booking sessions.</p>
             <form th:action="@{/register}" th:method="POST" th:object="${registerRequest}">
                 <div class="row2">
-                    <div class="field">
+                    <div class="field" th:classappend="${#fields.hasErrors('firstName')} ? 'error'">
                         <label for="r-first">First name</label>
-                        <input id="r-first" type="text" placeholder="Alex" th:field="*{firstName}" />
-                        <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Error message</p>
+                        <input id="r-first" type="text"  th:field="*{firstName}" />
+                        <span  th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error-text">Error message</span>
                     </div>
-                    <div class="field">
+                    <div class="field" th:classappend="${#fields.hasErrors('lastName')} ? 'error'">
                         <label for="r-last">Last name</label>
-                        <input id="r-last" type="text" placeholder="Petrov" th:field="*{lastName}" />
-                        <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Error message</p>
+                        <input id="r-last" type="text"  th:field="*{lastName}" />
+                        <span  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error-text">Error message</span>
                     </div>
                 </div>
-                <div class="field">
+                <div  class="field " th:classappend="${#fields.hasErrors('email')} ? 'error'">
                     <label for="r-email">Email</label>
                     <input id="r-email" type="email" placeholder="you@example.com" th:field="*{email}" />
-                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error message</p>
+                    <span  th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-text">Error message</span>
                 </div>
                 <div class="field error">
                     <label for="r-pass">Password</label>
@@ -98,6 +98,7 @@
     if (window.location.hash === '#register') {
         showPanel('register');
     }
+
 </script>
 
 </body>

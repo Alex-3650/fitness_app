@@ -38,12 +38,14 @@ public class UserService {
     @Transactional
     public User registerUser(RegisterRequest registerRequest) {
 
-        Optional<User> userByPassword = this.userRepository
+        Optional<User> authUser = this.userRepository
                 .findUserByEmail((registerRequest.getEmail()));
 
-        if (userByPassword.isPresent()) {
-            throw new RuntimeException("User already exists!");
+        if (authUser.isPresent()) {
+            throw new RuntimeException("User with this email already exists!");
         }
+
+
 
         User user = User.builder()
                 .firstName(registerRequest.getFirstName())

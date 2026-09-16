@@ -31,7 +31,10 @@ public class AuthController {
 
 
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("login");
+
+            ModelAndView modelAndView = new ModelAndView("login");
+            modelAndView.addObject("registerRequest", new RegisterRequest());
+            return modelAndView;
         }
         Optional<User> user = this.userService.authenticateUser(loginRequest);
         if (user.isEmpty()) {
@@ -53,11 +56,16 @@ public class AuthController {
 
 
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("login");
+            ModelAndView modelAndView = new ModelAndView("login");
+            modelAndView.addObject("loginRequest", new  LoginRequest());
+
+            return modelAndView;
         }
 
         this.userService.registerUser(registerRequest);
         redirectAttributes.addFlashAttribute("message", "You have successfully registered!");
-        return new ModelAndView("redirect:/auth");
+        ModelAndView modelAndView = new ModelAndView("redirect:/auth");
+        return modelAndView;
+
     }
 }
