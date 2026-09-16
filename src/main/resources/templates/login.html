@@ -34,17 +34,22 @@
 
         <div id="login" class="panel active">
             <h1>Welcome back</h1>
+            <p th:if="${message}" class="chip violet" th:text="${message}"> </p>
+
             <p class="sub">Sign in to book sessions and manage your wallet.</p>
-            <form th:action="@{/login}" th:method="POST">
-                <div class="field">
-                    <label for="l-email">Email</label>
-                    <input id="l-email" type="email" placeholder="you@example.com" />
+            <form th:action="@{/login}" th:method="POST" th:object="${loginRequest}">
+                <div class="field" th:classappend="${#fields.hasErrors('email')} ? 'error'">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" placeholder="you@example.com" th:field="*{email}" />
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-text">Error message</span>
                 </div>
-                <div class="field">
+                <div class="field" th:classappend="${#fields.hasErrors('password')} ? 'error'">
                     <label for="l-pass">Password</label>
-                    <input id="l-pass" type="password" placeholder="••••••••" />
+                    <input id="l-pass" type="password" placeholder="••••••••" th:field="*{password}" />
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-text">Error message</span>
                 </div>
-                <button type="button" class="submit">Sign in</button>
+                <p class="chip coral"  th:if="${errorMessage}" th:text="${errorMessage}">Incorrect email or password!</p>
+                <button type="submit" class="submit">Sign in</button>
             </form>
         </div>
 
@@ -52,27 +57,30 @@
         <div id="register" class="panel">
             <h1>Create your account</h1>
             <p class="sub">Join FitPulse and start booking sessions.</p>
-            <form th:action="@{/register}" th:method="POST">
+            <form th:action="@{/register}" th:method="POST" th:object="${registerRequest}">
                 <div class="row2">
-                    <div class="field">
+                    <div class="field" th:classappend="${#fields.hasErrors('firstName')} ? 'error'">
                         <label for="r-first">First name</label>
-                        <input id="r-first" type="text" placeholder="Alex" />
+                        <input id="r-first" type="text"  th:field="*{firstName}" />
+                        <span  th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error-text">Error message</span>
                     </div>
-                    <div class="field">
+                    <div class="field" th:classappend="${#fields.hasErrors('lastName')} ? 'error'">
                         <label for="r-last">Last name</label>
-                        <input id="r-last" type="text" placeholder="Petrov" />
+                        <input id="r-last" type="text"  th:field="*{lastName}" />
+                        <span  th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error-text">Error message</span>
                     </div>
                 </div>
-                <div class="field">
+                <div  class="field " th:classappend="${#fields.hasErrors('email')} ? 'error'">
                     <label for="r-email">Email</label>
-                    <input id="r-email" type="email" placeholder="you@example.com" />
+                    <input id="r-email" type="email" placeholder="you@example.com" th:field="*{email}" />
+                    <span  th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-text">Error message</span>
                 </div>
                 <div class="field error">
                     <label for="r-pass">Password</label>
-                    <input id="r-pass" type="password" placeholder="At least 8 characters" />
-                    <span class="error-text">Password must be at least 8 characters</span>
+                    <input id="r-pass" type="password" placeholder="At least 8 characters" th:field="*{password}" />
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-text">Password must be at least 8 characters</span>
                 </div>
-                <button type="button" class="submit">Create account</button>
+                <button type="submit"  class="submit">Create account</button>
             </form>
         </div>
 
@@ -90,6 +98,7 @@
     if (window.location.hash === '#register') {
         showPanel('register');
     }
+
 </script>
 
 </body>

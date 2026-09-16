@@ -17,9 +17,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class Subscription extends BaseEntity {
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+
 
     @Column(nullable = false, length = 100)
     private String planName;

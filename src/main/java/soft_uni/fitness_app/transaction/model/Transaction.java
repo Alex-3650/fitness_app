@@ -25,7 +25,7 @@ public class Transaction extends BaseEntity {
     @Column(nullable = false, length = 30)
     private TransactionType type;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false )
     private BigDecimal amount;
 
     @Column(nullable = false)

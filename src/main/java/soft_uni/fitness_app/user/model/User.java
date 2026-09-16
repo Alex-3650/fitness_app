@@ -2,10 +2,14 @@ package soft_uni.fitness_app.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import soft_uni.fitness_app.booking.model.Booking;
 import soft_uni.fitness_app.shared.BaseEntity;
+import soft_uni.fitness_app.subscriptions.model.Subscription;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -34,6 +38,13 @@ public class User extends BaseEntity {
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal walletBalance = BigDecimal.ZERO;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private List<Subscription> subscriptions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Booking> bookings = new ArrayList<>();
 
 
     @Column(nullable = false)
