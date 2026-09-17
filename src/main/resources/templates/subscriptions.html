@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>FitPulse — Subscriptions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/subscriptions.css}">
+</head>
+<body>
+
+<div class="app">
+    <nav class="nav">
+        <div class="brand">Fit<span>Pulse</span></div>
+        <div class="nav-group">
+            <div class="nav-label">Train</div>
+            <a class="nav-item" href="dashboard.html"><span class="dot"></span> Browse sessions</a>
+            <a class="nav-item" href="bookings.html"><span class="dot"></span> My bookings</a>
+            <a class="nav-item active" href="subscriptions.html"><span class="dot"></span> Subscriptions</a>
+        </div>
+        <div class="nav-group">
+            <div class="nav-label">Account</div>
+            <a class="nav-item" href="wallet.html"><span class="dot"></span> Wallet</a>
+            <a class="nav-item" href="profile.html"><span class="dot"></span> Profile</a>
+        </div>
+        <div class="nav-bottom">
+            <a class="user-card" href="profile.html">
+                <div class="avatar"></div>
+                <div>
+                    <div class="name">Alex Petrov</div>
+                    <div class="bal">€142.50</div>
+                </div>
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="top">
+            <h1>Subscriptions</h1>
+            <p>Your current plan, and every discipline you can subscribe to.</p>
+        </div>
+
+        <div class="active-card">
+            <div>
+                <div class="type-tag">hyrox</div>
+                <div class="plan-name">HYROX Monthly</div>
+                <div class="dates">Sep 1 – Oct 1, 2026</div>
+            </div>
+            <span class="status-pill">Active</span>
+            <button class="cancel-plan">Cancel plan</button>
+        </div>
+
+        <h2>Browse plans</h2>
+        <div class="plan-grid">
+            <div class="plan-card violet">
+                <div class="type-tag">weightlifting</div>
+                <div class="plan-title">Weightlifting</div>
+                <select>
+                    <option>1 month</option>
+                    <option>3 months</option>
+                    <option>6 months</option>
+                    <option>12 months</option>
+                </select>
+                <div class="price">€45<span>/mo</span></div>
+                <button>Subscribe</button>
+            </div>
+            <div class="plan-card coral">
+                <div class="type-tag">hyrox</div>
+                <div class="plan-title">HYROX</div>
+                <select>
+                    <option>1 month</option>
+                    <option>3 months</option>
+                    <option>6 months</option>
+                    <option>12 months</option>
+                </select>
+                <div class="price">€60<span>/mo</span></div>
+                <button>Subscribe</button>
+            </div>
+            <div class="plan-card cyan">
+                <div class="type-tag">crossfit</div>
+                <div class="plan-title">CrossFit</div>
+                <select>
+                    <option>1 month</option>
+                    <option>3 months</option>
+                    <option>6 months</option>
+                    <option>12 months</option>
+                </select>
+                <div class="price">€55<span>/mo</span></div>
+                <button>Subscribe</button>
+            </div>
+            <div class="plan-card lime">
+                <div class="type-tag">cardio</div>
+                <div class="plan-title">Cardio</div>
+                <select>
+                    <option>1 month</option>
+                    <option>3 months</option>
+                    <option>6 months</option>
+                    <option>12 months</option>
+                </select>
+                <div class="price">€35<span>/mo</span></div>
+                <button>Subscribe</button>
+            </div>
+        </div>
+
+        <h2>Past subscriptions</h2>
+        <div class="history">
+            <div class="h-row">
+                <div><div class="name">CrossFit Monthly</div><div class="sub">1 month</div></div>
+                <div class="date">Jul 1 – Aug 1, 2026</div>
+                <span class="badge expired">Expired</span>
+            </div>
+            <div class="h-row">
+                <div><div class="name">Weightlifting Quarterly</div><div class="sub">3 months</div></div>
+                <div class="date">Feb 1 – May 1, 2026</div>
+                <span class="badge cancelled">Cancelled</span>
+            </div>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>
