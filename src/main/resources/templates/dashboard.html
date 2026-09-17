@@ -46,7 +46,7 @@
         <div class="stat-strip">
             <div class="stat violet"><div th:text="${user.subscriptions.size()}" class="v">1</div><div class="l">Active subscription</div></div>
             <div class="stat cyan"><div th:text="${user.bookings.size()}" class="v">3</div><div class="l">Upcoming bookings</div></div>
-            <div class="stat coral"><div class="v">12</div><div class="l">Sessions this month</div></div>
+            <div class="stat coral"><div th:text="${monthlySessions}" class="v">12</div><div class="l">Sessions this month</div></div>
             <div class="stat lime"><div th:text="${user.walletBalance}" class="v">€142.50</div><div class="l">Wallet balance</div></div>
         </div>
 
