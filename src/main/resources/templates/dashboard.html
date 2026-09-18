@@ -15,14 +15,24 @@
         <div class="brand">Fit<span>Pulse</span></div>
         <div class="nav-group">
             <div class="nav-label">Train</div>
-            <a class="nav-item active"><span class="dot"></span> Browse sessions</a>
-            <a class="nav-item"><span class="dot"></span> My bookings</a>
-            <a class="nav-item"><span class="dot"></span> Subscriptions</a>
+            <a class="nav-item active">
+                <span class="dot"></span>Browse sessions
+            </a>
+            <a class="nav-item"  th:href="@{/bookings}">
+                <span class="dot"></span> My bookings
+            </a>
+            <a class="nav-item"  th:href="@{/subscriptions}">
+                <span class="dot"></span> Subscriptions
+            </a>
         </div>
         <div class="nav-group">
             <div class="nav-label">Account</div>
-            <a class="nav-item"><span class="dot"></span> Wallet</a>
-            <a class="nav-item"><span class="dot"></span> Profile</a>
+            <a class="nav-item"  th:href="@{/wallet}">
+                <span class="dot"></span> Wallet
+            </a>
+            <a class="nav-item" th:href="@{/profile}">
+                <span class="dot"></span> Profile
+            </a>
         </div>
         <div class="nav-bottom">
             <div class="user-card">
@@ -70,70 +80,70 @@
                 <div class="s-time">Today <span class="d">18:00</span></div>
                 <div class="s-cap"><span class="n">4</span> / 12 spots</div>
                 <!-- TODO: Add trainingSessions List object -->
-                <a th:href="@{/{id}/details(id=${trainingSession.id})}">
-                    <button  class="s-btn" type="button">Details</button>
-                </a>
-            </div>
+                <!--  <a th:href="@{/{id}/details(id=${trainingSession.id})}"></a> -->
+                     <button  class="s-btn" type="button">Details</button>
 
-            <div class="s-row">
-                <div class="bar violet"></div>
-                <div class="s-main">
-                    <div class="type violet">weightlifting</div>
-                    <div class="coach">Olympic Lifting Fundamentals</div>
-                    <div class="coach-sub">Coach Maria Dimitrova — Strength Room</div>
-                </div>
-                <div class="s-time">Today <span class="d">19:30</span></div>
-                <div class="s-cap"><span class="n">7</span> / 10 spots</div>
-                <button class="s-btn">Details</button>
-            </div>
+             </div>
 
-            <div class="s-row">
-                <div class="bar cyan"></div>
-                <div class="s-main">
-                    <div class="type cyan">crossfit</div>
-                    <div class="coach">WOD: Grace + Accessory</div>
-                    <div class="coach-sub">Coach Ivan Georgiev — Main Floor</div>
-                </div>
-                <div class="s-time">Tomorrow <span class="d">07:00</span></div>
-                <div class="s-cap full"><span class="n">15</span> / 15 spots</div>
-                <button class="s-btn">Details</button>
-            </div>
+             <div class="s-row">
+                 <div class="bar violet"></div>
+                 <div class="s-main">
+                     <div class="type violet">weightlifting</div>
+                     <div class="coach">Olympic Lifting Fundamentals</div>
+                     <div class="coach-sub">Coach Maria Dimitrova — Strength Room</div>
+                 </div>
+                 <div class="s-time">Today <span class="d">19:30</span></div>
+                 <div class="s-cap"><span class="n">7</span> / 10 spots</div>
+                 <button class="s-btn">Details</button>
+             </div>
 
-            <div class="s-row">
-                <div class="bar lime"></div>
-                <div class="s-main">
-                    <div class="type lime">cardio</div>
-                    <div class="coach">Interval Endurance Run</div>
-                    <div class="coach-sub">Coach Petar Ivanov — Track</div>
-                </div>
-                <div class="s-time">Tomorrow <span class="d">18:30</span></div>
-                <div class="s-cap"><span class="n">9</span> / 20 spots</div>
-                <button class="s-btn">Details</button>
-            </div>
+             <div class="s-row">
+                 <div class="bar cyan"></div>
+                 <div class="s-main">
+                     <div class="type cyan">crossfit</div>
+                     <div class="coach">WOD: Grace + Accessory</div>
+                     <div class="coach-sub">Coach Ivan Georgiev — Main Floor</div>
+                 </div>
+                 <div class="s-time">Tomorrow <span class="d">07:00</span></div>
+                 <div class="s-cap full"><span class="n">15</span> / 15 spots</div>
+                 <button class="s-btn">Details</button>
+             </div>
 
-            <div class="s-row">
-                <div class="bar violet"></div>
-                <div class="s-main">
-                    <div class="type violet">weightlifting</div>
-                    <div class="coach">Powerlifting Technique</div>
-                    <div class="coach-sub">Coach Maria Dimitrova — Strength Room</div>
-                </div>
-                <div class="s-time">Fri <span class="d">17:00</span></div>
-                <div class="s-cap"><span class="n">3</span> / 10 spots</div>
-                <button class="s-btn">Details</button>
-            </div>
-        </div>
-    </main>
-</div>
+             <div class="s-row">
+                 <div class="bar lime"></div>
+                 <div class="s-main">
+                     <div class="type lime">cardio</div>
+                     <div class="coach">Interval Endurance Run</div>
+                     <div class="coach-sub">Coach Petar Ivanov — Track</div>
+                 </div>
+                 <div class="s-time">Tomorrow <span class="d">18:30</span></div>
+                 <div class="s-cap"><span class="n">9</span> / 20 spots</div>
+                 <button class="s-btn">Details</button>
+             </div>
 
-<script>
-    document.querySelectorAll('.f-chip').forEach(c=>{
-        c.addEventListener('click',()=>{
-            document.querySelectorAll('.f-chip').forEach(x=>x.classList.remove('on'));
-            c.classList.add('on');
-        });
-    });
-</script>
+             <div class="s-row">
+                 <div class="bar violet"></div>
+                 <div class="s-main">
+                     <div class="type violet">weightlifting</div>
+                     <div class="coach">Powerlifting Technique</div>
+                     <div class="coach-sub">Coach Maria Dimitrova — Strength Room</div>
+                 </div>
+                 <div class="s-time">Fri <span class="d">17:00</span></div>
+                 <div class="s-cap"><span class="n">3</span> / 10 spots</div>
+                 <button class="s-btn">Details</button>
+             </div>
+         </div>
+     </main>
+ </div>
 
-</body>
-</html>
+ <script>
+     document.querySelectorAll('.f-chip').forEach(c=>{
+         c.addEventListener('click',()=>{
+             document.querySelectorAll('.f-chip').forEach(x=>x.classList.remove('on'));
+             c.classList.add('on');
+         });
+     });
+ </script>
+
+ </body>
+ </html>
