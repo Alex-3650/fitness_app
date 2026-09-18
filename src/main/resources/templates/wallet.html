@@ -15,14 +15,14 @@
         <div class="brand">Fit<span>Pulse</span></div>
         <div class="nav-group">
             <div class="nav-label">Train</div>
-            <a class="nav-item" href="dashboard.html"><span class="dot"></span> Browse sessions</a>
-            <a class="nav-item" href="bookings.html"><span class="dot"></span> My bookings</a>
-            <a class="nav-item" href="subscriptions.html"><span class="dot"></span> Subscriptions</a>
+            <a class="nav-item" th:href="@{/dashboard}"><span class="dot"></span> Browse sessions</a>
+            <a class="nav-item " th:href="@{/bookings}"><span class="dot"></span> My bookings</a>
+            <a class="nav-item" th:href="@{/subscriptions}"><span class="dot"></span> Subscriptions</a>
         </div>
         <div class="nav-group">
             <div class="nav-label">Account</div>
-            <a class="nav-item active" href="wallet.html"><span class="dot"></span> Wallet</a>
-            <a class="nav-item" href="profile.html"><span class="dot"></span> Profile</a>
+            <a class="nav-item active" th:href="@{/wallet}"><span class="dot"></span> Wallet</a>
+            <a class="nav-item" th:href="@{/profile}"><span class="dot"></span> Profile</a>
         </div>
         <div class="nav-bottom">
             <a class="user-card" href="profile.html">
