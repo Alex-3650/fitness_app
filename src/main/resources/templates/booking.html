@@ -26,13 +26,13 @@
             <a class="nav-item" th:href="@{/profile}"><span class="dot"></span> Profile</a>
         </div>
         <div class="nav-bottom">
-            <a class="user-card" href="profile.html">
+            <div class="user-card">
                 <div class="avatar"></div>
                 <div>
-                    <div class="name">Alex Petrov</div>
-                    <div class="bal">€142.50</div>
+                    <div th:text="${user.firstName + ' ' +user.lastName}" class="name">Alex Petrov</div>
+                    <div th:text="${user.walletBalance}" class="bal">€142.50</div>
                 </div>
-            </a>
+            </div>
         </div>
     </nav>
 

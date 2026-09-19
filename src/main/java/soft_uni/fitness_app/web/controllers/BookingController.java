@@ -57,7 +57,7 @@ public class BookingController {
         List<Booking> booking = tab.equals("upcoming")
                                 ? bookingService.getUpcomingSessions(user.get())
                                 : bookingService.getPastSessions(user.get());
-
+        modelAndView.addObject("user", user.get());
         modelAndView.addObject("bookings", booking);
         modelAndView.addObject("activeTab", tab);
         return modelAndView;
