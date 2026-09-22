@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>FitPulse — Subscription</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/subscriptionCard.css}">
+</head>
+<body>
+
+<div class="card">
+
+
+    <div th:if="${transaction.status.name() == 'SUCCESSFUL'}">
+        <div class="icon success">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C8FF6B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+        </div>
+
+        <h1>Subscription confirmed</h1>
+        <p class="subtitle">You're all set — go book your first session.</p>
+
+        <div class="plan-badge" th:text="${subscription.workoutType}">hyrox</div>
+        <div class="plan-name" th:text="${subscription.planName}">HYROX Plan</div>
+
+        <div class="details">
+            <div class="d-row">
+                <span class="l">Duration</span>
+                <span class="v" th:text="${subscription.duration.getDisplayName()}">1 month</span>
+            </div>
+            <div class="d-row">
+                <span class="l">Start date</span>
+                <span class="v" th:text="${#temporals.format(subscription.startDate, 'MMM d, yyyy')}">Sep 1, 2026</span>
+            </div>
+            <div class="d-row">
+                <span class="l">Renews / ends</span>
+                <span class="v" th:text="${#temporals.format(subscription.endDate, 'MMM d, yyyy')}">Oct 1, 2026</span>
+            </div>
+            <div class="d-row total">
+                <span class="l">Charged to wallet</span>
+                <span class="v" th:text=" ${#numbers.formatDecimal(transaction.amount, 1, 2)} + '€' ">60.00€</span>
+            </div>
+            <div class="d-row">
+                <span class="l">Remaining balance</span>
+                <span class="v" th:text=" ${#numbers.formatDecimal(user.walletBalance, 1, 2)}+ '€' ">82.50€</span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a class="btn btn-primary" th:href="@{/dashboard}">Browse sessions</a>
+        </div>
+    </div>
+
+
+    <div th:unless="${transaction.status.name() == 'SUCCESSFUL'}">
+        <div class="icon failure">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#FF6178" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </div>
+
+        <h1>Subscription failed</h1>
+        <p class="subtitle">We couldn't complete this purchase.</p>
+
+        <div class="failure-note" th:text="${transaction.note}">Insufficient wallet balance.</div>
+
+        <div class="actions">
+            <a class="btn btn-primary" th:href="@{/subscriptions}">Back to plans</a>
+            <a class="btn btn-ghost" th:href="@{/wallet}">Top up wallet</a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

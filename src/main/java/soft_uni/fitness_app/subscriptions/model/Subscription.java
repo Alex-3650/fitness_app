@@ -45,4 +45,8 @@ public class Subscription extends BaseEntity {
 
     @Column(nullable = false)
     private LocalDate endDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }
