@@ -53,55 +53,53 @@
 
         <h2>Browse plans</h2>
         <div class="plan-grid">
-            <div class="plan-card violet">
+
+            <form class="plan-card violet" th:action="@{/subscriptions(subscriptionType='WEIGHTLIFTING')}" method="post" th:object="${upgradeRequest}">
                 <div class="type-tag">weightlifting</div>
                 <div class="plan-title">Weightlifting</div>
-                <select>
-                    <option>1 month</option>
-                    <option>3 months</option>
-                    <option>6 months</option>
-                    <option>12 months</option>
+                <select name="duration" th:field="*{planDuration}">
+                    <option th:each="period : ${T(soft_uni.fitness_app.subscriptions.model.PlanDuration).values()}"
+                            th:value="${period}" th:text="${period.getDisplayName()}">1 month</option>
                 </select>
                 <div class="price">€45<span>/mo</span></div>
-                <button>Subscribe</button>
-            </div>
-            <div class="plan-card coral">
+                <button type="submit">Subscribe</button>
+            </form>
+
+            <form class="plan-card coral" th:action="@{/subscriptions(subscriptionType='HYROX')}" method="post" th:object="${upgradeRequest}">
                 <div class="type-tag">hyrox</div>
                 <div class="plan-title">HYROX</div>
-                <select>
-                    <option>1 month</option>
-                    <option>3 months</option>
-                    <option>6 months</option>
-                    <option>12 months</option>
+                <select name="duration" th:field="*{planDuration}">
+                    <option th:each="period : ${T(soft_uni.fitness_app.subscriptions.model.PlanDuration).values()}"
+                            th:value="${period}" th:text="${period.getDisplayName()}">1 month</option>
                 </select>
                 <div class="price">€60<span>/mo</span></div>
-                <button>Subscribe</button>
-            </div>
-            <div class="plan-card cyan">
+                <button type="submit">Subscribe</button>
+            </form>
+
+            <form class="plan-card cyan" th:action="@{/subscriptions(subscriptionType='CROSSFIT')}" method="post" th:object="${upgradeRequest}">
                 <div class="type-tag">crossfit</div>
                 <div class="plan-title">CrossFit</div>
-                <select>
-                    <option>1 month</option>
-                    <option>3 months</option>
-                    <option>6 months</option>
-                    <option>12 months</option>
+                <select name="duration" th:field="*{planDuration}">
+                    <option th:each="period : ${T(soft_uni.fitness_app.subscriptions.model.PlanDuration).values()}"
+                            th:value="${period}" th:text="${period.getDisplayName()}">1 month</option>
                 </select>
                 <div class="price">€55<span>/mo</span></div>
-                <button>Subscribe</button>
-            </div>
-            <div class="plan-card lime">
+                <button type="submit">Subscribe</button>
+            </form>
+
+            <form class="plan-card lime" th:action="@{/subscriptions(subscriptionType='CARDIO')}" method="post" th:object="${upgradeRequest}">
                 <div class="type-tag">cardio</div>
                 <div class="plan-title">Cardio</div>
-                <select>
-                    <option>1 month</option>
-                    <option>3 months</option>
-                    <option>6 months</option>
-                    <option>12 months</option>
+                <select name="duration" th:field="*{planDuration}">
+                    <option th:each="period : ${T(soft_uni.fitness_app.subscriptions.model.PlanDuration).values()}"
+                            th:value="${period}" th:text="${period.getDisplayName()}">1 month</option>
                 </select>
                 <div class="price">€35<span>/mo</span></div>
-                <button>Subscribe</button>
-            </div>
+                <button type="submit">Subscribe</button>
+            </form>
+
         </div>
+
 
         <h2>Past subscriptions</h2>
         <div class="history">

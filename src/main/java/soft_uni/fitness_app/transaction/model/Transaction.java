@@ -31,6 +31,10 @@ public class Transaction extends BaseEntity {
     @Column(nullable = false)
     private Instant timestamp;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus status;
+
     @Column(length = 255)
     private String note;
 }

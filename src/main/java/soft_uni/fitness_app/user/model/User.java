@@ -39,8 +39,7 @@ public class User extends BaseEntity {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal walletBalance = BigDecimal.ZERO;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Subscription> subscriptions = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)

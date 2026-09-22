@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import soft_uni.fitness_app.transaction.model.Transaction;
 import soft_uni.fitness_app.transaction.repository.TransactionRepository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class TransactionService {
 
@@ -18,5 +21,9 @@ public class TransactionService {
 
     public Transaction save(Transaction transaction) {
         return transactionRepository.save(transaction);
+    }
+
+    public Optional<Transaction> findById(UUID id) {
+        return transactionRepository.findById(id);
     }
 }

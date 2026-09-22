@@ -81,6 +81,11 @@ public class UserService {
     return user;
     }
 
+    public User saveUser(User user){
+        return this.userRepository.save(user);
+    }
+
+
     public Optional<User> authenticateUser(@Valid LoginRequest loginRequest) {
 
         Optional<User> userByEmail = this.userRepository.findUserByEmail(loginRequest.getEmail());
