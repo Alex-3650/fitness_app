@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" th:href="@{/subscriptions.css}">
+    <link rel="stylesheet" th:href="@{/subscription.css}">
 </head>
 <body>
 
@@ -25,13 +25,13 @@
             <a class="nav-item" th:href="@{/profile}"><span class="dot"></span> Profile</a>
         </div>
         <div class="nav-bottom">
-            <a class="user-card" href="profile.html">
+            <div class="user-card">
                 <div class="avatar"></div>
                 <div>
-                    <div class="name">Alex Petrov</div>
-                    <div class="bal">€142.50</div>
+                    <div th:text="${user.firstName + ' ' +user.lastName}" class="name">Alex Petrov</div>
+                    <div th:text="${user.walletBalance}" class="bal">€142.50</div>
                 </div>
-            </a>
+            </div>
         </div>
     </nav>
 
@@ -41,17 +41,32 @@
             <p>Your current plan, and every discipline you can subscribe to.</p>
         </div>
 
-        <div class="active-card">
-            <div>
-                <div class="type-tag">hyrox</div>
-                <div class="plan-name">HYROX Monthly</div>
-                <div class="dates">Sep 1 – Oct 1, 2026</div>
+        <form th:if="${currentPlan}" th:action="@{/subscriptions/cancel/{id}(id=${currentPlan.id})}" th:method="PATCH">
+            <div class="active-card" >
+                <div>
+                    <div class="type-tag" th:text="${#strings.toLowerCase(currentPlan.workoutType)}">hyrox</div>
+                    <div class="plan-name" th:text="${currentPlan.planName}">HYROX Monthly</div>
+                    <div class="dates">
+                        <span th:text="${#temporals.format(currentPlan.startDate, 'MMM d')}">Sep 1</span> –
+                        <span th:text="${#temporals.format(currentPlan.endDate, 'MMM d, yyyy')}">Oct 1, 2026</span>
+                    </div>
+                </div>
+                <span class="status-pill">Active</span>
+                <button type="submit" class="cancel-plan" >Cancel plan</button>
             </div>
-            <span class="status-pill">Active</span>
-            <button class="cancel-plan">Cancel plan</button>
+        </form>
+
+        <div class="no-plan" th:unless="${currentPlan}">
+            <div>
+                <div class="no-plan-title">No active plan</div>
+                <div class="no-plan-subtitle">You're not subscribed yet</div>
+                <p>Pick a plan below to start booking sessions.</p>
+            </div>
+
+            <a href="#browse-plans" class="browse-plans">Browse plans</a>
         </div>
 
-        <h2>Browse plans</h2>
+        <h2 id="browse-plans">Browse plans</h2>
         <div class="plan-grid">
 
             <form class="plan-card violet" th:action="@{/subscriptions(subscriptionType='WEIGHTLIFTING')}" method="post" th:object="${upgradeRequest}">
@@ -103,16 +118,54 @@
 
         <h2>Past subscriptions</h2>
         <div class="history">
-            <div class="h-row">
-                <div><div class="name">CrossFit Monthly</div><div class="sub">1 month</div></div>
-                <div class="date">Jul 1 – Aug 1, 2026</div>
-                <span class="badge expired">Expired</span>
+            <div th:each="pastSubscription : ${pastSubscriptions}" class="h-row">
+
+                <div>
+                    <div class="plan-title">
+            <span th:text="${pastSubscription.workoutType.getDisplayName()}" class="name">
+                CrossFit
+            </span>
+
+                        <span th:switch="${pastSubscription.duration}" class="name" >
+
+                <span th:case="${T(soft_uni.fitness_app.subscriptions.model.PlanDuration).ONE_MONTH}">
+                    Monthly
+                </span>
+
+                <span th:case="${T(soft_uni.fitness_app.subscriptions.model.PlanDuration).THREE_MONTHS}">
+                    Quarterly
+                </span>
+
+                <span th:case="${T(soft_uni.fitness_app.subscriptions.model.PlanDuration).SIX_MONTHS}">
+                    6 Months
+                </span>
+
+                <span th:case="${T(soft_uni.fitness_app.subscriptions.model.PlanDuration).TWELVE_MONTHS}">
+                    Yearly
+                </span>
+
+            </span>
+                    </div>
+
+                    <div class="sub"
+                         th:text="${pastSubscription.duration.getDisplayName()}">
+                        1 Month
+                    </div>
+                </div>
+
+                <div th:text="${#temporals.format(pastSubscription.startDate, 'MMM d')} + ' – ' + ${#temporals.format(pastSubscription.endDate, 'MMM d, yyyy')}"
+                     class="date">
+                    Jul 1 – Aug 1, 2026
+                </div>
+
+                <span th:text="${pastSubscription.status.getDisplayName()}"
+                      th:classappend="${pastSubscription.status == T(soft_uni.fitness_app.subscriptions.model.SubscriptionStatus).EXPIRED} ? ' expired' : 'cancelled'"
+                      class="badge">
+        Expired
+    </span>
+
             </div>
-            <div class="h-row">
-                <div><div class="name">Weightlifting Quarterly</div><div class="sub">3 months</div></div>
-                <div class="date">Feb 1 – May 1, 2026</div>
-                <span class="badge cancelled">Cancelled</span>
-            </div>
+
         </div>
     </main>
 </div>
