@@ -37,8 +37,8 @@ public class SubscriptionService {
         this.transactionService = transactionService;
         this.userService = userService;
     }
-    private final static String SUBSCRIPTION_SUCCESS_MESSAGE="Bought : \" %s \" subscription.";
-    private final static String SUBSCRIPTION_FAILURE_MESSAGE="Not enough funds for \" %s \" subscription.";
+    private final static String SUBSCRIPTION_SUCCESS_MESSAGE="Bought : \"%s\" subscription.";
+    private final static String SUBSCRIPTION_FAILURE_MESSAGE="Not enough funds for \"%s\" subscription.";
 
     private static final Map<WorkoutType, BigDecimal> PLAN_PRICES = Map.of(
             WorkoutType.WEIGHTLIFTING, new BigDecimal("45.00"),
@@ -65,7 +65,8 @@ public class SubscriptionService {
         if (isActive || insufficientFunds) {
             String note = isActive
                     ? "You already have an active subscription!"
-                    : String.format(SUBSCRIPTION_FAILURE_MESSAGE, subscriptionType);
+                    : String.format(SUBSCRIPTION_FAILURE_MESSAGE, subscriptionType
+            );
 
             Transaction failedTransaction = buildTransaction(user,totalPrice,TransactionStatus.FAILED, note);
 
