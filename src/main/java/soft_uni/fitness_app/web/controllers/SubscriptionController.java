@@ -2,13 +2,10 @@ package soft_uni.fitness_app.web.controllers;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import soft_uni.fitness_app.subscriptions.model.PlanDuration;
 import soft_uni.fitness_app.subscriptions.model.Subscription;
 import soft_uni.fitness_app.subscriptions.model.SubscriptionStatus;
 import soft_uni.fitness_app.subscriptions.service.SubscriptionService;
@@ -16,11 +13,10 @@ import soft_uni.fitness_app.transaction.model.Transaction;
 import soft_uni.fitness_app.transaction.model.TransactionStatus;
 import soft_uni.fitness_app.transaction.service.TransactionService;
 import soft_uni.fitness_app.user.model.User;
-import soft_uni.fitness_app.user.repository.UserRepository;
 import soft_uni.fitness_app.user.service.UserService;
 import soft_uni.fitness_app.web.dtos.UpgradeRequest;
 
-import java.security.PrivateKey;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -42,8 +38,15 @@ public class SubscriptionController {
     }
 
     @GetMapping
-    public ModelAndView showSubscriptions() {
+    public ModelAndView showSubscriptions(HttpSession session) {
         ModelAndView mav = new ModelAndView("subscriptions");
+        UUID userId = (UUID) session.getAttribute("userId");
+        User user = this.userService.findById(userId).orElseThrow();
+        Subscription currentPlan = this.subscriptionService.findCurrentPlan(user, SubscriptionStatus.ACTIVE).orElse(null);
+        List<Subscription> pastSubscriptions = this.subscriptionService.getPastSubscriptions(user);
+        mav.addObject("pastSubscriptions", pastSubscriptions);
+        mav.addObject("user", user);
+        mav.addObject("currentPlan", currentPlan);
         mav.addObject("upgradeRequest", new UpgradeRequest());
         return mav;
     }
@@ -85,6 +88,13 @@ public class SubscriptionController {
         }
         return mav;
 
+    }
+
+    @PatchMapping("/cancel/{id}")
+    public String deleteMapping(@PathVariable UUID id) {
+        this.subscriptionService.cancelSubscription(id);
+
+        return "redirect:/subscriptions";
     }
 
 

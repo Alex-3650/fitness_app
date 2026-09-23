@@ -19,8 +19,10 @@ import soft_uni.fitness_app.web.dtos.UpgradeRequest;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -44,6 +46,7 @@ public class SubscriptionService {
             WorkoutType.CROSSFIT, new BigDecimal("55.00"),
             WorkoutType.CARDIO, new BigDecimal("35.00")
     );
+
 
     @Transactional
     public Transaction subscribe(User user, UpgradeRequest upgradeRequest, String subscriptionType) {
@@ -80,7 +83,7 @@ public class SubscriptionService {
                  .user(user)
                 .price(totalPrice)
                 .duration(upgradeRequest.getPlanDuration())
-                .planName(subscriptionType + "plan")
+                .planName(subscriptionType + " plan")
                 .status(SubscriptionStatus.ACTIVE)
                 .workoutType(workoutType)
                 .startDate(LocalDate.now())
@@ -102,6 +105,11 @@ public class SubscriptionService {
                 user.getEmail(), subscriptionType, upgradeRequest.getPlanDuration(),totalPrice);
 
         return savedTransaction;
+    }
+
+    public Optional<Subscription> findCurrentPlan(User user, SubscriptionStatus subscriptionStatus) {
+
+        return   this.subscriptionRepository.findByUserAndStatus(user,subscriptionStatus);
     }
 
 
@@ -133,8 +141,15 @@ public class SubscriptionService {
                 .build();
     }
 
-    public Optional<Subscription> findCurrentPlan(User user, SubscriptionStatus subscriptionStatus) {
 
-     return   this.subscriptionRepository.findByUserAndStatus(user,subscriptionStatus);
+    public Subscription  cancelSubscription(UUID id) {
+        Subscription subscription = this.subscriptionRepository.findById(id).orElseThrow(() -> new RuntimeException("Subscription not found"));
+        subscription.setStatus(SubscriptionStatus.CANCELLED);
+        return this.subscriptionRepository.save(subscription);
     }
+
+    public List<Subscription> getPastSubscriptions(User user) {
+       return this.subscriptionRepository.findByUserAndStatusNot(user,SubscriptionStatus.ACTIVE);
+    }
+
 }

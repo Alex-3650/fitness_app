@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import soft_uni.fitness_app.subscriptions.model.Subscription;
 import soft_uni.fitness_app.transaction.model.Transaction;
+import soft_uni.fitness_app.transaction.model.TransactionStatus;
 import soft_uni.fitness_app.transaction.model.TransactionType;
 import soft_uni.fitness_app.transaction.service.TransactionService;
 import soft_uni.fitness_app.user.model.Role;
@@ -63,6 +65,7 @@ public class UserService {
         Transaction bonus = Transaction.builder()
                 .user(user)
                 .note("Register bonus")
+                .status(TransactionStatus.SUCCESSFUL)
                 .timestamp(Instant.now())
                 .amount(SIGNUP_BONUS)
                 .type(TransactionType.TOP_UP)
@@ -109,4 +112,5 @@ public class UserService {
 
         return user;
     }
+
 }
