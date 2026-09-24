@@ -68,7 +68,7 @@ public class UserService {
                 .status(TransactionStatus.SUCCESSFUL)
                 .timestamp(Instant.now())
                 .amount(SIGNUP_BONUS)
-                .type(TransactionType.TOP_UP)
+                .type(TransactionType.SIGNUP_BONUS)
                 .build();
 
 
