@@ -1,0 +1,165 @@
+
+:root {
+    --bg: #0A0C10;
+    --surface: #12151A;
+    --surface-raised: #171B22;
+    --border: rgba(255, 255, 255, 0.07);
+    --border-strong: rgba(255, 255, 255, 0.14);
+    --text: #EEF1F5;
+    --text-dim: #8891A0;
+    --text-faint: #565F6C;
+    --violet: #8B7CFF;
+    --cyan: #3FE0E6;
+    --coral: #FF6178;
+    --lime: #C8FF6B;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.error-card {
+    background: var(--surface);
+    border: 1px solid rgba(255, 97, 120, 0.3);
+    border-radius: 16px;
+    padding: 36px 32px;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 12px 40px -10px rgba(255, 97, 120, 0.15);
+}
+
+.icon.failure {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: rgba(255, 97, 120, 0.12);
+    border: 1px solid rgba(255, 97, 120, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 0 16px rgba(255, 97, 120, 0.15);
+}
+
+.icon.failure svg {
+    width: 24px;
+    height: 24px;
+}
+
+.error-title {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.error-subtitle {
+    color: var(--text-dim);
+    font-size: 13.5px;
+    line-height: 1.5;
+}
+
+.error-box {
+    background: var(--surface-raised);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 22px 0 28px;
+    color: var(--coral);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    text-align: left;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.error-box::before {
+    content: "•";
+    font-size: 16px;
+    line-height: 1;
+}
+
+.btn-retry {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, var(--violet), #6B5BEA);
+    color: #0A0C10;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 13px 26px;
+    border-radius: 9px;
+    box-shadow: 0 0 0 1px rgba(139,124,255,.4), 0 10px 26px -12px rgba(139,124,255,.6);
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.btn-retry:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+.icon.success {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: rgba(200, 255, 107, 0.12);
+    border: 1px solid rgba(200, 255, 107, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 0 16px rgba(200, 255, 107, 0.15);
+}
+
+.icon.success svg {
+    width: 24px;
+    height: 24px;
+}
+
+.success-card {
+    background: var(--surface);
+    border: 1px solid rgba(200, 255, 107, 0.3);
+    border-radius: 16px;
+    padding: 36px 32px;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 12px 40px -10px rgba(200, 255, 107, 0.15);
+}
+
+.success-amount-box {
+    background: var(--surface-raised);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    padding: 16px;
+    margin: 22px 0 28px;
+    text-align: center;
+}
+
+.success-amount-box .label {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+.success-amount-box .value {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--lime);
+}

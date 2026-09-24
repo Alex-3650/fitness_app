@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up Error - Wallet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/topUpCard.css}">
+</head>
+<body>
+
+<div th:if="${isFailed=='YES'}" class="error-card">
+    <div class="icon failure">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#FF6178" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+    </div>
+
+    <h1 class="error-title">TOP UP FAILED</h1>
+    <p class="error-subtitle">We couldn't process your transaction because the entered amount is invalid.</p>
+
+    <div class="error-box" th:object="${topUpBalanceDto}">
+            <span th:if="${#fields.hasErrors('topUpBalance')}" th:errors="*{topUpBalance}">
+                Amount must be between 5.00 € and 500.00 €.
+            </span>
+    </div>
+
+    <a th:href="@{/wallet}" class="btn-retry">Back to Wallet</a>
+</div>
+
+    <div th:if="${isFailed == 'NO'}" class="success-card">
+        <div class="icon success">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C8FF6B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+        </div>
+
+        <h1 class="error-title">TOP UP SUCCESSFUL</h1>
+        <p class="error-subtitle">Your funds have been credited to your wallet balance.</p>
+
+        <div class="success-amount-box">
+            <div class="label">Amount Added</div>
+            <div class="value" th:text="${#numbers.formatDecimal(topUpBalanceDto.topUpBalance, 1, 2)} + ' €'">
+                25.00 €
+            </div>
+        </div>
+
+        <a th:href="@{/wallet}" class="btn-retry">Back to Wallet</a>
+    </div>
+
+
+</body>
+</html>

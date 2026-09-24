@@ -25,13 +25,13 @@
             <a class="nav-item" th:href="@{/profile}"><span class="dot"></span> Profile</a>
         </div>
         <div class="nav-bottom">
-            <a class="user-card" href="profile.html">
+            <div class="user-card">
                 <div class="avatar"></div>
                 <div>
-                    <div class="name">Alex Petrov</div>
-                    <div class="bal">€142.50</div>
+                    <div th:text="${user.firstName + ' ' +user.lastName}" class="name">Alex Petrov</div>
+                    <div th:text="${user.walletBalance}" class="bal">€142.50</div>
                 </div>
-            </a>
+            </div>
         </div>
     </nav>
 
@@ -44,28 +44,30 @@
         <div class="balance-card">
             <div>
                 <div class="label">Current balance</div>
-                <div class="amount">€142.50</div>
+                <div th:text="${#numbers.formatDecimal(user.walletBalance, 1, 2)} +'€'" class="amount">€142.50</div>
             </div>
             <div class="quick-stats">
-                <div class="qs"><div class="v">€180.00</div><div class="l">Topped up</div></div>
-                <div class="qs"><div class="v">€137.50</div><div class="l">Spent on plans</div></div>
-                <div class="qs"><div class="v">€100.00</div><div class="l">Sign-up bonus</div></div>
+                <div class="qs"><div th:text="${#numbers.formatDecimal(topUpMoney, 1, 2)} +'€'" class="v">€180.00</div><div class="l">Topped up</div></div>
+                <div class="qs"><div th:text="${#numbers.formatDecimal(subscriptionMoney, 1, 2)} +'€'" class="v">€137.50</div><div class="l">Spent on plans</div></div>
+                <div class="qs"><div th:text="${#numbers.formatDecimal(registerBonusMoney, 1, 2)} +'€'" class="v">€100.00</div><div class="l">Sign-up bonus</div></div>
             </div>
         </div>
 
         <h2>Top up</h2>
-        <div class="topup-card">
-            <div class="amount-chips">
-                <button class="a-chip">€10</button>
-                <button class="a-chip selected">€25</button>
-                <button class="a-chip">€50</button>
-                <button class="a-chip">€100</button>
+        <form th:action="@{/wallet/topUp}" th:method="POST" th:object="${topUpDto}">
+            <div class="topup-card">
+                <div class="amount-chips">
+                    <button type="button"  class="a-chip">€10</button>
+                    <button type="button" class="a-chip ">€25</button>
+                    <button type="button" class="a-chip">€50</button>
+                    <button type="button" class="a-chip">€100</button>
+                </div>
+                <div class="topup-row">
+                    <input th:field="*{topUpBalance}" type="text" placeholder="Or enter a custom amount" />
+                    <button type="submit" class="topup-btn">Top up wallet</button>
+                </div>
             </div>
-            <div class="topup-row">
-                <input type="text" placeholder="Or enter a custom amount" value="€25.00" />
-                <button class="topup-btn">Top up wallet</button>
-            </div>
-        </div>
+        </form>
 
         <h2>Transaction history</h2>
         <div class="history">
@@ -104,11 +106,14 @@
 </div>
 
 <script>
-    document.querySelectorAll('.a-chip').forEach(c=>{
-        c.addEventListener('click', ()=>{
-            document.querySelectorAll('.a-chip').forEach(x=>x.classList.remove('selected'));
+
+    document.querySelectorAll('.a-chip').forEach(c => {
+        c.addEventListener('click', () => {
+            document.querySelectorAll('.a-chip').forEach(x => x.classList.remove('selected'));
             c.classList.add('selected');
-            document.querySelector('.topup-row input').value = c.textContent.replace('€','€') + '.00';
+
+            const numericValue = c.textContent.replace('€', '').trim();
+            document.querySelector('.topup-row input').value = numericValue + '.00';
         });
     });
 </script>

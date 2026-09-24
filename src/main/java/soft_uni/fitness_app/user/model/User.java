@@ -5,6 +5,7 @@ import lombok.*;
 import soft_uni.fitness_app.booking.model.Booking;
 import soft_uni.fitness_app.shared.BaseEntity;
 import soft_uni.fitness_app.subscriptions.model.Subscription;
+import soft_uni.fitness_app.transaction.model.Transaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -44,6 +45,10 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Booking> bookings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Transaction> transactions;
+
 
 
     @Column(nullable = false)
