@@ -22,7 +22,7 @@
         <div class="nav-group">
             <div class="nav-label">Account</div>
             <a class="nav-item" th:href="@{/wallet}"><span class="dot"></span> Wallet</a>
-            <a class="nav-item" th:href="@{/profile}"><span class="dot"></span> Profile</a>
+            <a class="nav-item" th:href="@{/profile/{id}(id=${user.id})}"><span class="dot"></span> Profile</a>
         </div>
         <div class="nav-bottom">
             <div class="user-card">

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" th:href="@{/profile.cssgit }">
+    <link rel="stylesheet" th:href="@{/profile.css}">
 </head>
 <body>
 
@@ -22,14 +22,16 @@
         <div class="nav-group">
             <div class="nav-label">Account</div>
             <a class="nav-item" th:href="@{/wallet}"><span class="dot"></span> Wallet</a>
-            <a class="nav-item active" th:href="@{/profile}"><span class="dot"></span> Profile</a>
+            <a class="nav-item active" th:href="@{/profile/{id}(id=${user.id})}"><span class="dot"></span> Profile</a>
         </div>
         <div class="nav-bottom">
             <a class="user-card" href="profile.html">
-                <div class="avatar"></div>
-                <div>
-                    <div class="name">Alex Petrov</div>
-                    <div class="bal">€142.50</div>
+                <div class="user-card">
+                    <div class="avatar"></div>
+                    <div>
+                        <div th:text="${user.firstName + ' ' +user.lastName}" class="name">Alex Petrov</div>
+                        <div th:text="${user.walletBalance}" class="bal">€142.50</div>
+                    </div>
                 </div>
             </a>
         </div>
@@ -44,46 +46,40 @@
         <div class="profile-header">
             <div class="big-avatar"></div>
             <div>
-                <div class="name">Alex Petrov</div>
-                <div class="email">alex.petrov@example.com</div>
+                <div th:text="${user.firstName+ ' ' +user.lastName}" class="name">Alex Petrov</div>
+                <div th:text="${user.email}" class="email">alex.petrov@example.com</div>
             </div>
-            <span class="role-badge">USER</span>
+            <span th:text="${user.role}" class="role-badge">USER</span>
         </div>
-
-        <div class="stats-row">
-            <div class="stat"><div class="v">1</div><div class="l">Active subscription</div></div>
-            <div class="stat"><div class="v">12</div><div class="l">Sessions completed</div></div>
-            <div class="stat"><div class="v">€142.50</div><div class="l">Wallet balance</div></div>
-        </div>
-
+        
         <h2>Account details</h2>
         <div class="card">
-            <form>
+            <form th:action="@{/profile/{id}(id=${user.id})}" th:method="PATCH">
                 <div class="row2">
                     <div class="field">
                         <label for="p-first">First name</label>
-                        <input id="p-first" type="text" value="Alex" />
+                        <input th:value="${user.firstName}" id="p-first" type="text"  />
                     </div>
                     <div class="field">
                         <label for="p-last">Last name</label>
-                        <input id="p-last" type="text" value="Petrov" />
+                        <input th:value="${user.lastName}" id="p-last" type="text"  />
                     </div>
                 </div>
                 <div class="field">
                     <label for="p-email">Email</label>
-                    <input id="p-email" type="email" value="alex.petrov@example.com" />
+                    <input th:value="${user.email}" id="p-email" type="email"  />
                 </div>
                 <div class="field">
                     <label for="p-role">Role</label>
-                    <input id="p-role" type="text" value="User" disabled />
+                    <input th:value="${user.role.name()}" id="p-role" type="text"  disabled />
                 </div>
-                <button type="button" class="save-btn">Save changes</button>
+                <button type="submit" class="save-btn">Save changes</button>
             </form>
         </div>
 
         <h2>Change password</h2>
         <div class="card">
-            <form>
+            <form th:action="@{/profile/{id}(id=${user.id})/password}" th:method="PATCH">
                 <div class="field">
                     <label for="p-current">Current password</label>
                     <input id="p-current" type="password" placeholder="••••••••" />
@@ -98,15 +94,20 @@
                         <input id="p-confirm" type="password" placeholder="Repeat new password" />
                     </div>
                 </div>
-                <button type="button" class="save-btn">Update password</button>
+                <button type="submit" class="save-btn">Update password</button>
             </form>
         </div>
 
-        <div class="card danger-card">
-            <h2>Log out</h2>
-            <p style="color:var(--text-dim); font-size:13px; margin-bottom:16px;">End your current session on this device.</p>
-            <button class="logout-btn" onclick="location.href='login.html'">Log out</button>
-        </div>
+        <form th:action="@{/profile/{id}(id=${user.id})/logout}" th:method="POST">
+            <div class="card danger-card">
+                <h2>Log out</h2>
+                <p style="color:var(--text-dim); font-size:13px; margin-bottom:16px;">
+                    End your current session on this device.
+                </p>
+                <button type="submit" class="logout-btn">Log out</button>
+            </div>
+        </form>
+
     </main>
 </div>
 

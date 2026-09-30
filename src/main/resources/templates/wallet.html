@@ -22,7 +22,7 @@
         <div class="nav-group">
             <div class="nav-label">Account</div>
             <a class="nav-item active" th:href="@{/wallet}"><span class="dot"></span> Wallet</a>
-            <a class="nav-item" th:href="@{/profile}"><span class="dot"></span> Profile</a>
+            <a class="nav-item" th:href="@{/profile/{id}(id=${user.id})}"><span class="dot"></span> Profile</a>
         </div>
         <div class="nav-bottom">
             <div class="user-card">
@@ -63,45 +63,46 @@
                     <button type="button" class="a-chip">€100</button>
                 </div>
                 <div class="topup-row">
-                    <input th:field="*{topUpBalance}" type="text" placeholder="Or enter a custom amount" />
+                    <input th:field="*{topUpBalance}" type="number" placeholder="Enter an amount" />
                     <button type="submit" class="topup-btn">Top up wallet</button>
                 </div>
             </div>
         </form>
 
-        <h2>Transaction history</h2>
-        <div class="history">
-            <div class="h-row">
-                <div class="h-icon out">−</div>
-                <div><div class="name">HYROX Monthly subscription</div><div class="sub">Subscription purchase</div></div>
-                <div class="date">Sep 1, 2026</div>
-                <div class="amt minus">−€60.00</div>
-            </div>
-            <div class="h-row">
-                <div class="h-icon in">+</div>
-                <div><div class="name">Wallet top-up</div><div class="sub">Manual top-up</div></div>
-                <div class="date">Aug 28, 2026</div>
-                <div class="amt plus">+€100.00</div>
-            </div>
-            <div class="h-row">
-                <div class="h-icon out">−</div>
-                <div><div class="name">CrossFit Monthly subscription</div><div class="sub">Subscription purchase</div></div>
-                <div class="date">Jul 1, 2026</div>
-                <div class="amt minus">−€55.00</div>
-            </div>
-            <div class="h-row">
-                <div class="h-icon in">+</div>
-                <div><div class="name">Wallet top-up</div><div class="sub">Manual top-up</div></div>
-                <div class="date">Jun 30, 2026</div>
-                <div class="amt plus">+€80.00</div>
-            </div>
-            <div class="h-row">
-                <div class="h-icon in">+</div>
-                <div><div class="name">Sign-up bonus</div><div class="sub">Welcome credit</div></div>
-                <div class="date">Jun 12, 2026</div>
-                <div class="amt plus">+€100.00</div>
+        <h2>Last 10 transactions</h2>
+
+        <div class="history" th:unless="${userTransactions.isEmpty()}">
+            <div th:each="transaction : ${userTransactions}"
+                 class="h-row"
+                 th:classappend="(${transaction.type.name() == 'SUBSCRIPTION_PURCHASE'} ? ' out' : ' in')
+                        + (${transaction.status.name() != 'SUCCESSFUL'} ? ' h-row-failed' : '')">
+
+                <div class="h-icon" th:classappend="${transaction.type.name() == 'SUBSCRIPTION_PURCHASE'} ? ' out' : ' in'"
+                     th:text="${transaction.type.name() == 'SUBSCRIPTION_PURCHASE'} ? '−' : '+'">+</div>
+
+                <div class="h-main">
+                    <div class="name" th:text="${transaction.note}">Wallet top-up</div>
+                    <div class="sub" th:text="${#strings.replace(#strings.toLowerCase(transaction.type.name()), '_', ' ')}">top up</div>
+                </div>
+
+                <div class="h-meta">
+                    <div class="h-date" th:text="${#temporals.format(transaction.timestamp, 'MMM d, yyyy')}">Sep 1, 2026</div>
+                    <div class="status"
+                         th:classappend="${transaction.status.name() == 'SUCCESSFUL'} ? ' status-success' : ' status-failed'"
+                         th:text="${transaction.status.name()}">SUCCESSFUL</div>
+                    <div class="amt"
+                         th:classappend="${transaction.type.name() == 'SUBSCRIPTION_PURCHASE'} ? ' minus' : ' plus'"
+                         th:text="(${transaction.type.name() == 'SUBSCRIPTION_PURCHASE'} ? '−€' : '+€') + ${#numbers.formatDecimal(transaction.amount, 1, 2)}">+€60.00</div>
+                </div>
             </div>
         </div>
+
+        <div class="history history-empty" th:if="${userTransactions.isEmpty()}">
+            <div class="empty-icon">−</div>
+            <div class="empty-title">No transactions yet</div>
+            <div class="empty-text">Your wallet transactions will appear here.</div>
+        </div>
+
     </main>
 </div>
 
