@@ -61,12 +61,12 @@
         </div>
 
         <div class="filters">
-            <button class="f-chip on">All</button>
-            <button class="f-chip">Weightlifting</button>
-            <button class="f-chip">HYROX</button>
-            <button class="f-chip">CrossFit</button>
-            <button class="f-chip">Cardio</button>
-            <button class="f-chip">Yoga</button>
+            <button class="f-chip" th:classappend="${currentPlan == null} ? ' on'" data-type="ALL">All</button>
+            <button class="f-chip" th:classappend="${currentPlan != null and currentPlan.workoutType.name() == 'WEIGHTLIFTING'} ? ' on'" data-type="WEIGHTLIFTING">Weightlifting</button>
+            <button class="f-chip" th:classappend="${currentPlan != null and currentPlan.workoutType.name() == 'HYROX'} ? ' on'" data-type="HYROX">HYROX</button>
+            <button class="f-chip" th:classappend="${currentPlan != null and currentPlan.workoutType.name() == 'CROSSFIT'} ? ' on'" data-type="CROSSFIT">CrossFit</button>
+            <button class="f-chip" th:classappend="${currentPlan != null and currentPlan.workoutType.name() == 'CARDIO'} ? ' on'" data-type="CARDIO">Cardio</button>
+            <button class="f-chip" th:classappend="${currentPlan != null and currentPlan.workoutType.name() == 'YOGA'} ? ' on'" data-type="YOGA">Yoga</button>
         </div>
 
         <div class="sessions">
@@ -81,7 +81,8 @@
                 <div class="s-cap"><span class="n">4</span> / 12 spots</div>
                 <!-- TODO: Add trainingSessions List object -->
                 <!--  <a th:href="@{/{id}/details(id=${trainingSession.id})}"></a> -->
-                     <button  class="s-btn" type="button">Details</button>
+                     <button   class="s-btn" type="button">Details</button>
+<!--                th:disabled="${locked}" th:text="${locked} ? '🔒 Locked' : 'Details'"-->
 
              </div>
 

@@ -54,20 +54,24 @@
         
         <h2>Account details</h2>
         <div class="card">
-            <form th:action="@{/profile/{id}(id=${user.id})}" th:method="PATCH">
+            <form th:action="@{/profile/{id}(id=${user.id})}" th:method="PUT" th:object="${profileUpdateDto}">
                 <div class="row2">
                     <div class="field">
                         <label for="p-first">First name</label>
-                        <input th:value="${user.firstName}" id="p-first" type="text"  />
+                        <input th:field="*{firstName}" id="p-first" type="text"  />
+                        <p class="error-text" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name error</p>
+
                     </div>
                     <div class="field">
                         <label for="p-last">Last name</label>
-                        <input th:value="${user.lastName}" id="p-last" type="text"  />
+                        <input th:field="*{lastName}" id="p-last" type="text"  />
+                        <p class="error-text" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name error</p>
                     </div>
                 </div>
                 <div class="field">
                     <label for="p-email">Email</label>
-                    <input th:value="${user.email}" id="p-email" type="email"  />
+                    <input th:field="*{email}" id="p-email" type="email"  />
+                    <p class="error-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</p>
                 </div>
                 <div class="field">
                     <label for="p-role">Role</label>
@@ -79,26 +83,24 @@
 
         <h2>Change password</h2>
         <div class="card">
-            <form th:action="@{/profile/{id}(id=${user.id})/password}" th:method="PATCH">
+            <form th:action="@{/profile/{id}/password(id=${user.id})}" th:method="PATCH" th:object="${changePasswordRequest}">
                 <div class="field">
                     <label for="p-current">Current password</label>
-                    <input id="p-current" type="password" placeholder="••••••••" />
+                    <input th:field="*{currentPassword}" id="p-current" type="password" placeholder="••••••••" />
+                    <p class="error-text" th:if="${#fields.hasErrors('currentPassword')}" th:errors="*{currentPassword}">Blank password</p>
                 </div>
                 <div class="row2">
                     <div class="field">
                         <label for="p-new">New password</label>
-                        <input id="p-new" type="password" placeholder="At least 8 characters" />
-                    </div>
-                    <div class="field">
-                        <label for="p-confirm">Confirm new password</label>
-                        <input id="p-confirm" type="password" placeholder="Repeat new password" />
+                        <input th:field="*{newPassword}" id="p-new" type="password" placeholder="At least 8 characters" />
+                        <p class="error-text" th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}">Blank or Invalid password</p>
                     </div>
                 </div>
                 <button type="submit" class="save-btn">Update password</button>
             </form>
         </div>
 
-        <form th:action="@{/profile/{id}(id=${user.id})/logout}" th:method="POST">
+        <form th:action="@{/profile/{id}/logout(id=${user.id})}" th:method="POST">
             <div class="card danger-card">
                 <h2>Log out</h2>
                 <p style="color:var(--text-dim); font-size:13px; margin-bottom:16px;">

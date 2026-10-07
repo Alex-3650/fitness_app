@@ -23,5 +23,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Query("SELECT COALESCE(SUM(t.amount), 0) FROM Transaction t " +
             "WHERE t.user = :user AND t.type = :type AND t.status = 'SUCCESSFUL'")
     BigDecimal sumAmountByUserAndType(@Param("user") User user, @Param("type") TransactionType type);
+
+    boolean existsByEmail(String email);
 }
 
