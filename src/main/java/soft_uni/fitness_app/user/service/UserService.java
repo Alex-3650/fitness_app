@@ -13,7 +13,9 @@ import soft_uni.fitness_app.transaction.service.TransactionService;
 import soft_uni.fitness_app.user.model.Role;
 import soft_uni.fitness_app.user.model.User;
 import soft_uni.fitness_app.user.repository.UserRepository;
+import soft_uni.fitness_app.web.dtos.ChangePasswordRequest;
 import soft_uni.fitness_app.web.dtos.LoginRequest;
+import soft_uni.fitness_app.web.dtos.ProfileUpdateDto;
 import soft_uni.fitness_app.web.dtos.RegisterRequest;
 
 import java.math.BigDecimal;
@@ -113,4 +115,31 @@ public class UserService {
         return user;
     }
 
+    public User updateUserData( ProfileUpdateDto profileUpdateDto, User user) {
+        boolean emailChanged = ! user.getEmail().equals(profileUpdateDto.getEmail());
+
+        boolean doesEmailExist = this.userRepository.existsByEmail(profileUpdateDto.getEmail());
+        if (doesEmailExist && emailChanged) {
+            throw new RuntimeException("User with this email already exists!");
+        }
+
+        user.setFirstName(profileUpdateDto.getFirstName());
+        user.setLastName(profileUpdateDto.getLastName());
+        user.setEmail(profileUpdateDto.getEmail());
+        user.setUpdatedOn(LocalDateTime.now());
+       return this.userRepository.save(user);
+    }
+
+    public User changePassword(User user, @Valid ChangePasswordRequest changePasswordRequest) {
+
+        if (!passwordEncoder.matches(changePasswordRequest.getCurrentPassword(), user.getPassword())) {
+            throw new RuntimeException("Invalid current password!");
+        }
+        user.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
+        user.setUpdatedOn(LocalDateTime.now());
+        User updatedUser = this.userRepository.save(user);
+
+        log.info("User [{}] with email [{}]  changed their password",user.getFirstName()+ " " +user.getLastName(), user.getEmail());
+        return updatedUser;
+    }
 }

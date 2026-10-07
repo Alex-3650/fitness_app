@@ -39,7 +39,7 @@ body{ background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; }
 .user-card .name{ font-size:12.5px; font-weight:500; }
 .user-card .bal{ font-size:11px; color:var(--lime); font-family:'IBM Plex Mono',monospace; }
 
-/* Main */
+
 main{ padding:34px 40px; }
 .top{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:28px; flex-wrap:wrap; gap:16px; }
 h1{ font-family:'Big Shoulders Display',sans-serif; font-weight:700; font-size:32px; }
@@ -93,4 +93,10 @@ h1{ font-family:'Big Shoulders Display',sans-serif; font-weight:700; font-size:3
     font-size:12.5px; font-weight:500; padding:8px 16px; border-radius:8px;
     background:var(--surface-raised); border:1px solid var(--border-strong); color:var(--text);
     white-space:nowrap;
+}
+.s-btn:disabled{
+    opacity:0.45;
+    cursor:not-allowed;
+    background:var(--surface-raised);
+    color:var(--text-faint);
 }
